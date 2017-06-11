@@ -13,6 +13,7 @@ struct List
 void initialization(List*, int, int*);
 void print(List*);
 void insertf_begin(List**, int);
+void insertf_end(List*, int);
 void free(List**);
 
 int main()
@@ -26,6 +27,8 @@ int main()
 	initialization(begin, 5, values);
 	print(begin);
 	insertf_begin(&begin, -5);
+	print(begin);
+	insertf_end(begin, 325);
 	print(begin);
 	
 	free(&begin);
@@ -61,7 +64,7 @@ void print(List* begin)
 	}
 	
 	cout << "NULL" << endl;
-	
+	delete printed;
 }
 
 void free(List** begin)
@@ -77,6 +80,7 @@ void free(List** begin)
 		current = current -> next;
 		delete temp;
 	}
+	delete current;
 	*begin = NULL;
 }
 
@@ -88,5 +92,26 @@ void insertf_begin(List** begin, int value)
 	item -> next = *begin;
 	
 	*begin = item;
+	
+
+}
+
+void insertf_end(List* begin, int value)
+{
+	List* item = new List;
+	List* current = begin;
+	
+	item -> value = value;
+	item -> next = NULL;
+	
+	while (1)
+	{
+		if (current -> next == NULL)
+			break;
+		current = current -> next;
+	}
+	
+	current -> next = item;
+
 }
 
