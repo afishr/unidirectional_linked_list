@@ -12,6 +12,7 @@ struct List
 //Functions declarations
 void initialization(List*, int, int*);
 void print(List*);
+void insertf_begin(List**, int);
 void free(List**);
 
 int main()
@@ -24,7 +25,8 @@ int main()
 	
 	initialization(begin, 5, values);
 	print(begin);
-	
+	insertf_begin(&begin, -5);
+	print(begin);
 	
 	free(&begin);
 	cin.sync();
@@ -58,7 +60,7 @@ void print(List* begin)
 		printed = printed -> next;
 	}
 	
-	cout << "NULL";
+	cout << "NULL" << endl;
 	
 }
 
@@ -76,5 +78,15 @@ void free(List** begin)
 		delete temp;
 	}
 	*begin = NULL;
+}
+
+void insertf_begin(List** begin, int value)
+{
+	List* item = new List;
+	
+	item -> value = value;
+	item -> next = *begin;
+	
+	*begin = item;
 }
 
