@@ -10,10 +10,11 @@ struct List
 };
 
 //Functions declarations
-void initialization(List*, int, int*);
+void initialization(List*, int, int[]);
 void print(List*);
 void insertf_begin(List**, int);
 void insertf_end(List*, int);
+void insert(List**, int);
 void free(List**);
 
 int main()
@@ -26,9 +27,14 @@ int main()
 	
 	initialization(begin, 5, values);
 	print(begin);
+	
 	insertf_begin(&begin, -5);
 	print(begin);
+	
 	insertf_end(begin, 325);
+	print(begin);
+	
+	insert(&begin, 15);
 	print(begin);
 	
 	free(&begin);
@@ -38,7 +44,7 @@ int main()
 }
 
 //Functions definitions
-void initialization(List* begin, int length, int* values)
+void initialization(List* begin, int length, int values[])
 {
 	
 	List *end = begin;
@@ -112,6 +118,44 @@ void insertf_end(List* begin, int value)
 	}
 	
 	current -> next = item;
+	current = NULL;
+}
 
+void insert(List** begin, int value)
+{
+	List* item = new List;
+	List* current = *begin;
+	
+	item -> value = value;
+	
+	if (current -> value >= value)
+	{
+		item -> next = current;
+		*begin = item;
+		current = NULL;
+		return;
+	}
+	
+	
+	while (current)
+	{
+		if (current -> next == NULL)
+		{
+			current -> next = item;
+			item -> next = NULL;
+			current = NULL;
+			return;
+		}
+		
+		if (current -> value <= value && (current -> next) -> value >= value)
+		{
+			item -> next = current -> next;
+			current -> next = item;
+			current = NULL;
+			return;
+		}
+		
+		current = current -> next;
+	}
 }
 
